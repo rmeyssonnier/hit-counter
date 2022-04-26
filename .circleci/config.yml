@@ -44,27 +44,27 @@ jobs:
       - store_test_results:
           path: test-results
 
-    build-docker-image:
-      executor: docker/docker
-      steps:
-        - setup_remote_docker
+  build-docker-image:
+    executor: docker/docker
+    steps:
+      - setup_remote_docker
 
-        - run:
-            name: Docker login
-            command: |
-              echo "$DOCKER_PASS" | docker login -u "$DOCKER_USER" --password-stdin
+      - run:
+          name: Docker login
+          command: |
+            echo "$DOCKER_PASS" | docker login -u "$DOCKER_USER" --password-stdin
 
-        - checkout
+      - checkout
 
-        - docker/build:
+      - docker/build:
           image: hit-counter
           tag: latest
           registry: robinmeyssonnier
 
-        - docker/push:
-            image: hit-counter
-            registry: robinmeyssonnier
-            tag: latest
+      - docker/push:
+          image: hit-counter
+          registry: robinmeyssonnier
+          tag: latest
 
 # Invoke jobs via workflows
 # See: https://circleci.com/docs/2.0/configuration-reference/#workflows
