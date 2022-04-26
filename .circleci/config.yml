@@ -45,6 +45,8 @@ jobs:
           path: test-results
 
   build-docker-image:
+    requires:
+      - unit-tests
     executor: docker/docker
     steps:
       - setup_remote_docker
