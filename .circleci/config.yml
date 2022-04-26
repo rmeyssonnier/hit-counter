@@ -37,7 +37,6 @@ jobs:
           name: Run tests
           # This assumes pytest is installed via the install-package step above
           command:   |
-            . venv/bin/activate
             mkdir test-results
             pytest --junitxml=test-results/junit.xml
 
