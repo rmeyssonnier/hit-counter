@@ -18,6 +18,11 @@ Application will bind on port 34001 (on all interfaces).
 To increase counter value : http://127.0.0.1:34001/ -> Will return current value  
 To reset counter value : http://127.0.0.1:34001/reset -> Will return success message
 
+### Get from docker hub
+```
+docker run -p 34001:34001 --name hit-counter -d robinmeyssonnier/hit-counter:latest
+````
+
 ### Dockerize
 It's possible to dockerize application
 ```
