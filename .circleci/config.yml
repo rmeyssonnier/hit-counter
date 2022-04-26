@@ -45,8 +45,6 @@ jobs:
           path: test-results
 
   build-docker-image:
-    requires:
-      - unit-tests
     executor: docker/docker
     steps:
       - setup_remote_docker
@@ -75,4 +73,6 @@ workflows:
     # Inside the workflow, you define the jobs you want to run.
     jobs:
       - unit-tests
-      - build-docker-image
+      - build-docker-image:
+          requires:
+            - unit-tests
