@@ -5,7 +5,8 @@
 
 # Hit Counter
 
-A sample POC app create to count http get request. Created initialy to test load balancing.
+A Sample POC app for DevOps. Project is used to test load balancing with a simple hit counter.
+Also project contain some devops requirements : Dockerfile + Kubernetes deployment + complete CI/CD.
 
 ### How to ?
 Run directly in python (tested in python v3.9.12)
