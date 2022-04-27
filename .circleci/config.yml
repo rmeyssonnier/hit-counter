@@ -61,12 +61,13 @@ jobs:
             coverage run -m pytest
             coverage report
             coverage html
+            coverage xml
 
       - store_artifacts:
           path: htmlcov
 
       - codecov/upload:
-          file: .coverage
+          file: coverage.xml
 
   build-docker-image:
     executor: docker/docker
