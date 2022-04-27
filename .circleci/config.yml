@@ -11,7 +11,7 @@ orbs:
   # See the orb documentation here: https://circleci.com/developer/orbs/orb/circleci/python
   python: circleci/python@1.5.0
   docker: circleci/docker@1.7.0
-
+  browser-tools: circleci/browser-tools@1.2.3
 # Define a job to be invoked later in a workflow.
 # See: https://circleci.com/docs/2.0/configuration-reference/#jobs
 jobs:
@@ -44,6 +44,26 @@ jobs:
       - store_test_results:
           path: test-results
 
+  code-coverage:
+    docker:
+      - image: cimg/python:3.10-browsers
+    steps:
+      - checkout
+      - python/install-packages:
+          pkg-manager: pip
+          # app-dir: ~/project/package-directory/  # If you're requirements.txt isn't in the root directory.
+          # pip-dependency-file: test-requirements.txt  # if you have a different name for your requirements file, maybe one that combines your runtime and test requirements.
+      - run:
+          name: Run tests
+          # This assumes pytest is installed via the install-package step above
+          command:   |
+            coverage run -m pytest
+            coverage report
+            coverage html
+
+      - store_artifacts:
+          path: htmlcov
+
   build-docker-image:
     executor: docker/docker
     steps:
@@ -73,6 +93,9 @@ workflows:
     # Inside the workflow, you define the jobs you want to run.
     jobs:
       - unit-tests
-      - build-docker-image:
+      - code-coverage:
           requires:
             - unit-tests
+      - build-docker-image:
+          requires:
+            - code-coverage
